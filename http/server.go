@@ -25,7 +25,7 @@ func Start() error {
 
 	reader := bufio.NewReader(conn)
 
-	// Read the request line (e.g., "GET / HTTP/1.1\r\n")
+	// Read the request line ("GET / HTTP/1.1\r\n")
 	line, err := reader.ReadString('\n')
 	if err != nil {
 		return fmt.Errorf("failed to read request: %w", err)
