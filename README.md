@@ -14,7 +14,7 @@ This project demonstrates how to implement a basic HTTP/1.1 server from scratch 
 - CI pipeline with GitHub Actions
 - Fully containerized with Docker
   
-## 🐳 Run with Docker
+## Run with Docker
 
 ```bash
 docker build -t go-http-server .
@@ -22,7 +22,7 @@ docker build -t go-http-server .
 ```bash
 docker run -p 8080:8080 go-http-server
 ```
-## 📬 Example Requests (with curl)
+## How to test
 
 Test the server locally using these commands:
 
