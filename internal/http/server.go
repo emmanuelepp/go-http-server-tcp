@@ -6,12 +6,26 @@ import (
 	"net"
 )
 
+const asciiArt = `
+  _    _ _______ _______ _____     _____ ______ _______      ________ _____  
+ | |  | |__   __|__   __|  __ \   / ____|  ____|  __ \ \    / /  ____|  __ \ 
+ | |__| |  | |     | |  | |__) | | (___ | |__  | |__) \ \  / /| |__  | |__) |
+ |  __  |  | |     | |  |  ___/   \___ \|  __| |  _  / \ \/ / |  __| |  _  / 
+ | |  | |  | |     | |  | |       ____) | |____| | \ \  \  /  | |____| | \ \ 
+ |_|  |_|  |_|     |_|  |_|      |_____/|______|_|  \_\  \/   |______|_|  \_\
+
+Go HTTP Server - Powered by TCP
+Created by: emmanuelepp
+`
+
 // Start launches a TCP server on port 8080 that handles HTTP requests.
 func Start() error {
 	listener, err := net.Listen("tcp", ":8080")
 	if err != nil {
 		return fmt.Errorf("failed to listen on :8080: %w", err)
 	}
+
+	fmt.Print(asciiArt)
 	fmt.Println("Listening on port 8080...")
 
 	for {
