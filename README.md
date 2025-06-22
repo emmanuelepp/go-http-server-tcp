@@ -31,23 +31,16 @@ Test the server locally using these commands:
 ```bash
 # GET /
 curl http://localhost:8080/
-```
 
-```bash
 # POST /submit
 curl -X POST http://localhost:8080/submit
-```
 
-```bash
 # PUT /update
 curl -X PUT http://localhost:8080/update
-```
-```bash
+
 # DELETE /delete
 curl -X DELETE http://localhost:8080/delete
-```
 
-```bash
 # Invalid path (should return 404)
 curl http://localhost:8080/invalid
 ```
