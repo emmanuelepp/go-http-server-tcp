@@ -15,7 +15,10 @@ func TestBuildResponse(t *testing.T) {
 
 	result := http.BuildResponse(resp)
 
-	expected := "HTTP/1.1 200 OK\r\nContent-Length: 12\r\nContent-Type: text/plain\r\n\r\nHellooooooo, Test!"
+	expected := "HTTP/1.1 200 OK\r\n" +
+		"Content-Length: 18\r\n" +
+		"Content-Type: text/plain\r\n\r\n" +
+		"Hellooooooo, Test!"
 
 	require.Equal(t, expected, string(result))
 }
