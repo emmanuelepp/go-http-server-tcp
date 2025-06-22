@@ -24,7 +24,7 @@ docker run -p 8080:8080 go-http-server
 ```
 ## 📬 Example Requests (with curl)
 
-Test the server locally or in Docker using these commands:
+Test the server locally using these commands:
 
 ```bash
 # GET /
