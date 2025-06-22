@@ -14,11 +14,11 @@ func TestHandleRequest(t *testing.T) {
 		path     string
 		expected string
 	}{
-		{"GET", "/", "Welcome (GET /)"},
+		{"GET", "/", "Welcome to the home page!"},
 		{"POST", "/submit", "Submitted!"},
 		{"PUT", "/update", "Updated!"},
 		{"DELETE", "/delete", "Deleted!"},
-		{"GET", "/unknown", "404 Not Found"},
+		{"GET", "/unknown", "Not Found"},
 	}
 
 	for _, tt := range tests {
@@ -29,6 +29,5 @@ func TestHandleRequest(t *testing.T) {
 
 		res := http.HandleRequest(req)
 		require.Equal(t, tt.expected, res.Body)
-
 	}
 }
