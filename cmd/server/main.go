@@ -1,7 +1,8 @@
 package main
 
 import (
-	"go-http-server-tcp/http"
+	"go-http-server-tcp/internal/http"
+
 	"log"
 )
 

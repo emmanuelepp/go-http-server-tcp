@@ -32,7 +32,7 @@ func Start() error {
 			continue
 		}
 
-		fmt.Printf("Raw request line: %s", line)
+		fmt.Printf("Raw request line (DEBUG): %q\n", line)
 
 		// Parse the request line into method, path, and version
 		method, path, version, err := ParseRequestLine(line)
@@ -58,8 +58,14 @@ func Start() error {
 			fmt.Printf("Header line: %s", headerLine)
 		}
 
-		response := HandleRequest(method, path)
-		_, err = conn.Write(response)
+		req := Request{
+			Method: method,
+			Path:   path,
+		}
+
+		resp := HandleRequest(req)
+		raw := BuildResponse(resp)
+		_, err = conn.Write(raw)
 		if err != nil {
 			fmt.Printf("Failed to write response: %v\n", err)
 		}
