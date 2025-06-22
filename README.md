@@ -18,6 +18,8 @@ This project demonstrates how to implement a basic HTTP/1.1 server from scratch 
 
 ```bash
 docker build -t go-http-server .
+```
+```bash
 docker run -p 8080:8080 go-http-server
 ```
 ## 📬 Example Requests (with curl)
@@ -27,15 +29,23 @@ Test the server locally or in Docker using these commands:
 ```bash
 # GET /
 curl http://localhost:8080/
+```
 
+```bash
 # POST /submit
 curl -X POST http://localhost:8080/submit
+```
 
+```bash
 # PUT /update
 curl -X PUT http://localhost:8080/update
-
+```
+```bash
 # DELETE /delete
 curl -X DELETE http://localhost:8080/delete
+```
 
+```bash
 # Invalid path (should return 404)
 curl http://localhost:8080/invalid
+```
