@@ -26,12 +26,28 @@ func Start() error {
 	reader := bufio.NewReader(conn)
 
 	// Read the request line ("GET / HTTP/1.1\r\n")
+
 	line, err := reader.ReadString('\n')
 	if err != nil {
 		return fmt.Errorf("failed to read request: %w", err)
 	}
 
 	fmt.Printf("Raw request line: %s", line)
+
+	// Read headers line by line until an empty line indicates end of headers
+
+	for {
+		headerLine, err := reader.ReadString('\n')
+		if err != nil {
+			return fmt.Errorf("failed to read header line: %w", err)
+		}
+
+		if headerLine == "\r\n" || headerLine == "\n" {
+			break
+		}
+
+		fmt.Printf("Header line: %s", headerLine)
+	}
 
 	return nil
 
