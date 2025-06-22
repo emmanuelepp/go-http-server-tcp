@@ -6,70 +6,66 @@ import (
 	"net"
 )
 
-// Start launches a raw TCP server on port 8080.
-// It accepts one connection and reads the first line of the HTTP request.
+// Start launches a TCP server on port 8080 that handles HTTP requests.
 func Start() error {
 	listener, err := net.Listen("tcp", ":8080")
 	if err != nil {
 		return fmt.Errorf("failed to listen on :8080: %w", err)
 	}
-
 	fmt.Println("Listening on port 8080...")
 
 	for {
 		conn, err := listener.Accept()
 		if err != nil {
-			return fmt.Errorf("failed to accept connection: %w", err)
-		}
-
-		reader := bufio.NewReader(conn)
-
-		// Read the request line ("GET / HTTP/1.1\r\n")
-		line, err := reader.ReadString('\n')
-		if err != nil {
-			fmt.Printf("Failed to read request: %v\n", err)
-			conn.Close()
+			fmt.Printf("Failed to accept connection: %v\n", err)
 			continue
 		}
 
-		fmt.Printf("Raw request line (DEBUG): %q\n", line)
+		go handleConnection(conn)
+	}
+}
 
-		// Parse the request line into method, path, and version
-		method, path, version, err := ParseRequestLine(line)
+func handleConnection(conn net.Conn) {
+	defer conn.Close()
+
+	reader := bufio.NewReader(conn)
+
+	// Read the request line ("GET / HTTP/1.1")
+	line, err := reader.ReadString('\n')
+	if err != nil {
+		fmt.Printf("Failed to read request: %v\n", err)
+		return
+	}
+	fmt.Printf("Raw request line (DEBUG): %q\n", line)
+
+	// Parse method, path, version
+	method, path, version, err := ParseRequestLine(line)
+	if err != nil {
+		fmt.Printf("Failed to parse request line: %v\n", err)
+		return
+	}
+	fmt.Printf("Parsed request - Method: %s, Path: %s, Version: %s\n", method, path, version)
+
+	// Read headers
+	for {
+		headerLine, err := reader.ReadString('\n')
 		if err != nil {
-			fmt.Printf("Failed to parse request line: %v\n", err)
-			conn.Close()
-			continue
+			fmt.Printf("Failed to read header line: %v\n", err)
+			return
 		}
-		fmt.Printf("Parsed request - Method: %s, Path: %s, Version: %s\n", method, path, version)
-
-		// Read headers line by line until an empty line indicates end of headers
-		for {
-			headerLine, err := reader.ReadString('\n')
-			if err != nil {
-				fmt.Printf("Failed to read header line: %v\n", err)
-				break
-			}
-
-			if headerLine == "\r\n" || headerLine == "\n" {
-				break
-			}
-
-			fmt.Printf("Header line: %s", headerLine)
+		if headerLine == "\r\n" || headerLine == "\n" {
+			break
 		}
+		fmt.Printf("Header line: %s", headerLine)
+	}
 
-		req := Request{
-			Method: method,
-			Path:   path,
-		}
+	// Build request and response
+	req := Request{Method: method, Path: path}
+	resp := HandleRequest(req)
+	raw := BuildResponse(resp)
 
-		resp := HandleRequest(req)
-		raw := BuildResponse(resp)
-		_, err = conn.Write(raw)
-		if err != nil {
-			fmt.Printf("Failed to write response: %v\n", err)
-		}
-
-		conn.Close()
+	_, err = conn.Write(raw)
+	if err != nil {
+		fmt.Printf("Failed to write response: %v\n", err)
 	}
 }
