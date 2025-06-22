@@ -4,13 +4,13 @@ Minimal HTTP server over raw TCP, written in Go to explore low-level networking 
 
 --
 
-## 🧠 Overview
+## Overview
 
 This project demonstrates how to implement a basic HTTP/1.1 server from scratch using Go's net and bufio packages — without relying on the net/http standard library.
 
 --
 
-## ✨ Features
+## Features
 
 - Raw TCP server built with `net` and `bufio`
 - Manual parsing of request line, headers, and methods
