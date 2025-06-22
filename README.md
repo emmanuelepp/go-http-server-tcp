@@ -1,5 +1,7 @@
 # HTTP SERVER TCP
 
+![image](https://github.com/user-attachments/assets/f8eeac76-fd2b-4a07-8388-6ba1b61a08b6)
+
 Minimal HTTP server over raw TCP, written in Go to explore low-level networking and HTTP parsing without using `net/http`.
 
 ## Overview
