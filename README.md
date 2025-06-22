@@ -1,14 +1,14 @@
-# go-http-server-tcp
+# HTTP SERVER TCP
 
 Minimal HTTP server over raw TCP, written in Go to explore low-level networking and HTTP parsing without using `net/http`.
 
----
+--
 
 ## 🧠 Overview
 
 This project demonstrates how to implement a basic HTTP/1.1 server from scratch using Go's net and bufio packages — without relying on the net/http standard library.
 
----
+--
 
 ## ✨ Features
 
@@ -18,7 +18,7 @@ This project demonstrates how to implement a basic HTTP/1.1 server from scratch 
 - CI pipeline with GitHub Actions
 - Fully containerized with Docker
   
----
+--
 
 ## 🐳 Run with Docker
 
